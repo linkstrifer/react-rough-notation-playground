@@ -130,7 +130,7 @@ function TestRNG() {
           <p>
             Rough Notation provides a way to order the animation of annotations
             by creating an{" "}
-            <RoughNotation type="highlight" color="yellow" order="2">
+            <RoughNotation type="highlight" color="yellow">
               annotation-group
             </RoughNotation>
             . Pass the list of annotations to create a group. When{" "}
@@ -139,7 +139,6 @@ function TestRNG() {
                 type="underline"
                 show={show}
                 color="#bf360c"
-                order="1"
               >
                 show
               </RoughNotation>
