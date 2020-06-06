@@ -9,86 +9,69 @@ const types = [
     backgroundColor: "#ffebee",
     color: "#b71c1c",
     value: "underline",
-    copy: ({ show, color, type }) => (
+    copy: (props) => (
       <p>
-        create a sketchy{" "}
-        <RoughNotation color={color} type={type} show={show}>
-          underline
-        </RoughNotation>{" "}
+        create a sketchy <RoughNotation {...props}>underline</RoughNotation>{" "}
         below an element.
       </p>
-    )
+    ),
   },
   {
     backgroundColor: "#f3e5f5",
     color: "#4a148c",
     value: "box",
-    copy: ({ show, color, type }) => (
+    copy: (props) => (
       <p>
-        This style draws a{" "}
-        <RoughNotation color={color} type={type} show={show}>
-          box
-        </RoughNotation>{" "}
-        around the element.
+        This style draws a <RoughNotation {...props}>box</RoughNotation> around
+        the element.
       </p>
-    )
+    ),
   },
   {
     backgroundColor: "#e3f2fd",
     color: "#0d47a1",
     value: "circle",
-    copy: ({ type, color, show }) => (
+    copy: (props) => (
       <p>
-        Draw a{" "}
-        <RoughNotation type={type} show={show} color={color}>
-          circle
-        </RoughNotation>{" "}
-        around the element.
+        Draw a <RoughNotation {...props}>circle</RoughNotation> around the
+        element.
       </p>
-    )
+    ),
   },
   {
     backgroundColor: "#f5f5f5",
     color: "#ffd54f",
     value: "highlight",
-    copy: ({ type, color, show }) => (
+    copy: (props) => (
       <p>
-        Creates a{" "}
-        <RoughNotation type={type} show={show} color={color}>
-          highlight
-        </RoughNotation>{" "}
-        effect as if marked by a highlighter.
+        Creates a <RoughNotation {...props}>highlight</RoughNotation> effect as
+        if marked by a highlighter.
       </p>
-    )
+    ),
   },
   {
     backgroundColor: "#e8f5e9",
     color: "#1b5e20",
     value: "strike-through",
-    copy: ({ type, color, show }) => (
+    copy: (props) => (
       <p>
         Draw a hand-drawn line through an element creating a{" "}
-        <RoughNotation type={type} show={show} color={color}>
-          stroke-through
-        </RoughNotation>{" "}
-        effect.
+        <RoughNotation {...props}>stroke-through</RoughNotation> effect.
       </p>
-    )
+    ),
   },
   {
     backgroundColor: "#fffde7",
     color: "#f57f17",
     value: "crossed-off",
-    copy: ({ type, color, show }) => (
+    copy: (props) => (
       <p>
         To symbolize rejection, use a{" "}
-        <RoughNotation type={type} show={show} color={color}>
-          crossed-off
-        </RoughNotation>{" "}
-        effect on an element.
+        <RoughNotation {...props}>crossed-off</RoughNotation> effect on an
+        element.
       </p>
-    )
-  }
+    ),
+  },
 ];
 
 export default function App() {
@@ -135,11 +118,7 @@ function TestRNG() {
             </RoughNotation>
             . Pass the list of annotations to create a group. When{" "}
             <i>
-              <RoughNotation
-                type="underline"
-                show={show}
-                color="#bf360c"
-              >
+              <RoughNotation type="underline" show={show} color="#bf360c">
                 show
               </RoughNotation>
             </i>{" "}
@@ -155,21 +134,103 @@ function TestRNG() {
 }
 
 function TestRN({ type }) {
+  const { value, backgroundColor, copy, color: defaultColor } = type;
+
+  const [animate, setAnimate] = useState(true);
+  const [animationDuration, setAnimationDuration] = useState(800);
+  const [color, setColor] = useState(defaultColor);
+  const [padding, setPadding] = useState(5);
   const [show, setShow] = useState(false);
-  const { value, backgroundColor, copy, color } = type;
+  const [strokeWidth, setStrokeWidth] = useState(1);
+
+  const props = {
+    animate,
+    animationDuration,
+    color,
+    padding,
+    show,
+    strokeWidth,
+    type: value,
+  };
 
   return (
     <div className="box" style={{ backgroundColor }}>
       <div className="content">
         <h3>
-          <RoughNotation type={value} color={color} show={show}>
-            {value}
-          </RoughNotation>
+          <RoughNotation {...props}>{value}</RoughNotation>
         </h3>
-        {copy && copy({ show, color, type: value })}
+        {copy && copy(props)}
         <button className="button" type="button" onClick={() => setShow(!show)}>
           Annotate
         </button>
+
+        <div className="properties">
+          <label>
+            Animate:
+            <input
+              type="checkbox"
+              checked={animate}
+              onChange={({ target }) => {
+                setAnimate(target.checked);
+              }}
+            />
+          </label>
+
+          <label>
+            Animation Duration:
+            <input
+              type="range"
+              min="0"
+              step="100"
+              max="5000"
+              value={animationDuration}
+              onChange={({ target }) => {
+                setAnimationDuration(target.value);
+              }}
+            />
+            ({`${animationDuration}ms`})
+          </label>
+
+          <label>
+            Color:
+            <input
+              type="color"
+              value={color}
+              onChange={({ target }) => {
+                setColor(target.value);
+              }}
+            />
+            <span style={{ color }}>{color}</span>
+          </label>
+
+          <label>
+            Padding:
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={padding}
+              onChange={({ target }) => {
+                setPadding(target.value);
+              }}
+            />
+            ({`${padding}px`})
+          </label>
+
+          <label>
+            Stroke Width:
+            <input
+              min="0"
+              max="20"
+              type="range"
+              value={strokeWidth}
+              onChange={({ target }) => {
+                setStrokeWidth(target.value);
+              }}
+            />
+            ({`${strokeWidth}px`})
+          </label>
+        </div>
       </div>
     </div>
   );
