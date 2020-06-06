@@ -103,7 +103,6 @@ function TestRNG() {
           <h3>
             <RoughNotation
               type="box"
-              show={show}
               color="#bf360c"
               strokeWidth={5}
             >
@@ -118,7 +117,7 @@ function TestRNG() {
             </RoughNotation>
             . Pass the list of annotations to create a group. When{" "}
             <i>
-              <RoughNotation type="underline" show={show} color="#bf360c">
+              <RoughNotation type="underline" color="#bf360c">
                 show
               </RoughNotation>
             </i>{" "}
