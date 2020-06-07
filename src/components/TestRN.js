@@ -9,6 +9,7 @@ export function TestRN({ type }) {
   const [padding, setPadding] = useState(5);
   const [show, setShow] = useState(false);
   const [strokeWidth, setStrokeWidth] = useState(1);
+
   const props = {
     animate,
     animationDuration,
@@ -18,6 +19,7 @@ export function TestRN({ type }) {
     strokeWidth,
     type: value,
   };
+
   return (
     <div className="box" style={{ backgroundColor }}>
       <div className="content">
@@ -76,7 +78,7 @@ export function TestRN({ type }) {
               max="100"
               value={padding}
               onChange={({ target }) => {
-                setPadding(target.value);
+                setPadding(parseInt(target.value, 10));
               }}
             />
             ({`${padding}px`})
@@ -90,7 +92,7 @@ export function TestRN({ type }) {
               type="range"
               value={strokeWidth}
               onChange={({ target }) => {
-                setStrokeWidth(target.value);
+                setStrokeWidth(parseInt(target.value, 10));
               }}
             />
             ({`${strokeWidth}px`})
