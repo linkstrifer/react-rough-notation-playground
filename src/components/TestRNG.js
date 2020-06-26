@@ -4,7 +4,10 @@ import { RoughNotation, RoughNotationGroup } from "react-rough-notation";
 export function TestRNG({ reverseOrder = false }) {
   const [show, setShow] = useState(false);
   return (
-    <div className="box" style={{ backgroundColor: "#fbe9e7" }}>
+    <div
+      className="box"
+      style={{ backgroundColor: "#fbe9e7", marginTop: "5px" }}
+    >
       <div className="content">
         <RoughNotationGroup show={show}>
           <h3>

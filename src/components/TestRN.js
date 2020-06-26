@@ -2,9 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { RoughNotation } from "react-rough-notation";
 export function TestRN({ type }) {
-  const { value, backgroundColor, copy, color: defaultColor } = type;
+  const {
+    animationDuration: animationDurationProp = 800,
+    backgroundColor,
+    color: defaultColor,
+    copy,
+    title,
+    value,
+    ...rest
+  } = type;
   const [animate, setAnimate] = useState(true);
-  const [animationDuration, setAnimationDuration] = useState(800);
+  const [animationDelay, setAnimationDelay] = useState(0);
+  const [animationDuration, setAnimationDuration] = useState(
+    animationDurationProp
+  );
   const [color, setColor] = useState(defaultColor);
   const [padding, setPadding] = useState(5);
   const [show, setShow] = useState(false);
@@ -12,19 +23,21 @@ export function TestRN({ type }) {
 
   const props = {
     animate,
+    animationDelay,
     animationDuration,
     color,
     padding,
     show,
     strokeWidth,
     type: value,
+    ...rest,
   };
 
   return (
     <div className="box" style={{ backgroundColor }}>
       <div className="content">
         <h3>
-          <RoughNotation {...props}>{value}</RoughNotation>
+          <RoughNotation {...props}>{title || value}</RoughNotation>
         </h3>
         {copy && copy(props)}
         <button className="button" type="button" onClick={() => setShow(!show)}>
@@ -41,6 +54,21 @@ export function TestRN({ type }) {
                 setAnimate(target.checked);
               }}
             />
+          </label>
+
+          <label>
+            Animation Delay:
+            <input
+              type="range"
+              min="0"
+              step="100"
+              max="5000"
+              value={animationDelay}
+              onChange={({ target }) => {
+                setAnimationDelay(target.value);
+              }}
+            />
+            ({`${animationDelay}ms`})
           </label>
 
           <label>
