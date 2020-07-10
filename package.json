@@ -7,10 +7,10 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-rough-notation": "^0.1.0",
-    "react-scripts": "3.0.1"
+    "react-rough-notation": "^0.1.1"
   },
   "devDependencies": {
+    "react-scripts": "^3.0.1",
     "typescript": "3.8.3"
   },
   "scripts": {
